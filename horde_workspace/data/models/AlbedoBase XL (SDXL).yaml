@@ -1,0 +1,3 @@
+name: "AlbedoBase XL (SDXL)"
+base_model: "stable_diffusion_xl"
+resolution: 1024

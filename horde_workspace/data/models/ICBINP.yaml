@@ -1,0 +1,3 @@
+name: ICBINP - I Can't Believe It's Not Photography
+base_model: "stable diffusion 1"
+resolution: 512
