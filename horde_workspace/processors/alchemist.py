@@ -40,29 +40,21 @@ class AlchemyGeneration:
 
 
 def caption(ws: Workspace, image: Image.Image) -> str:
-    return assert_none(
-        asyncio.run(async_alchemist(ws, image, [KNOWN_ALCHEMY_TYPES.caption])).caption
-    )
+    return assert_none(alchemist(ws, image, [KNOWN_ALCHEMY_TYPES.caption]).caption)
 
 
 def interrogation(ws: Workspace, image: Image.Image) -> AlchemyInterrogationDetails:
     return assert_none(
-        asyncio.run(
-            async_alchemist(ws, image, [KNOWN_ALCHEMY_TYPES.interrogation])
-        ).interrogation
+        alchemist(ws, image, [KNOWN_ALCHEMY_TYPES.interrogation]).interrogation
     )
 
 
 def nsfw(ws: Workspace, image: Image.Image) -> bool:
-    return assert_none(
-        asyncio.run(async_alchemist(ws, image, [KNOWN_ALCHEMY_TYPES.nsfw])).nsfw
-    )
+    return assert_none(alchemist(ws, image, [KNOWN_ALCHEMY_TYPES.nsfw]).nsfw)
 
 
 def upscale(ws: Workspace, image: Image.Image) -> Image.Image:
-    return asyncio.run(
-        async_alchemist(ws, image, [KNOWN_ALCHEMY_TYPES.NMKD_Siax])
-    ).get_image()
+    return alchemist(ws, image, [KNOWN_ALCHEMY_TYPES.NMKD_Siax]).get_image()
 
 
 def alchemist(

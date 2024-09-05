@@ -10,6 +10,10 @@ MODELS: dict[str, Model] = {}
 LORAS: dict[str, Lora] = {}
 EMBEDDINGS: dict[str, Embedding] = {}
 
+SNIPPETS = {
+    "watermark": "watermark, signature, logo, branding, copyright",
+}
+
 for yaml in Path("horde_workspace/data/models").glob("*.yaml"):
     with open(yaml, "r") as f:
         model = parse_yaml_raw_as(Model, f.read())

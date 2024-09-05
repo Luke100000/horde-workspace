@@ -1,5 +1,6 @@
 import asyncio
 import io
+import logging
 
 import aiohttp
 from PIL import Image
@@ -18,7 +19,7 @@ from horde_sdk.ai_horde_api.apimodels import (
 )
 
 from horde_workspace.classes.job import Job
-from horde_workspace.data import MODELS, LORAS, EMBEDDINGS
+from horde_workspace.data import MODELS, LORAS, EMBEDDINGS, SNIPPETS
 from horde_workspace.utils import download_image, b64_encode_image, GenerationError
 from horde_workspace.workspace import Workspace
 
@@ -64,6 +65,23 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
             width = job.size.width
             height = job.size.height
 
+        prompt = (
+            model.base_positive
+            + ", "
+            + job.prompt
+            + "###"
+            + job.negprompt
+            + ", "
+            + model.base_negative
+        )
+
+        # Apply snippets
+        for name, value in SNIPPETS.items():
+            prompt = prompt.replace("%" + name + "%", value)
+
+        if "%" in prompt:
+            logging.warning("Unresolved snippet in prompt: %s", prompt)
+
         response: ImageGenerateStatusResponse
         response, _ = await client.image_generate_request(
             ImageGenerateAsyncRequest(
@@ -72,17 +90,7 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
                 shared=ws.shared,
                 apikey=ws.apikey,
                 workers=ws.workers,
-                prompt=(
-                    model.base_positive
-                    + ", "
-                    + job.prompt
-                    + "###"
-                    + job.negprompt
-                    + ", "
-                    + model.base_negative
-                )
-                .strip(",")
-                .strip(),
+                prompt=prompt.strip(",").strip(),
                 models=[model.name],
                 source_image=b64_encode_image(job.source_image)
                 if job.source_image
