@@ -1,9 +1,10 @@
 [tool.poetry]
-name = "Horde Workspace"
+name = "horde-workspace"
 version = "0.1.0"
 description = "Utilities for generating images via the AI Horde."
 authors = ["Luke100000 <jonas.peche@aon.at>"]
 readme = "README.md"
+repository = "https://github.com/Luke100000/horde-workspace"
 
 [tool.poetry.dependencies]
 python = ">3.10"
