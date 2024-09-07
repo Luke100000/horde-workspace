@@ -9,13 +9,13 @@ from horde_sdk.ai_horde_api import (
     AIHordeAPIAsyncClientSession,
     AIHordeAPIAsyncSimpleClient,
 )
-from horde_sdk.ai_horde_api.consts import KNOWN_ALCHEMY_TYPES
 from horde_sdk.ai_horde_api.apimodels import (
     AlchemyStatusResponse,
     AlchemyAsyncRequest,
     AlchemyAsyncRequestFormItem,
     AlchemyInterrogationDetails,
 )
+from horde_sdk.ai_horde_api.consts import KNOWN_ALCHEMY_TYPES
 
 from horde_workspace.utils import (
     download_image,
@@ -24,6 +24,11 @@ from horde_workspace.utils import (
     assert_none,
 )
 from horde_workspace.workspace import Workspace
+
+try:
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+except AttributeError:
+    pass
 
 
 @dataclass

@@ -23,6 +23,11 @@ from horde_workspace.data import MODELS, LORAS, EMBEDDINGS, SNIPPETS
 from horde_workspace.utils import download_image, b64_encode_image, GenerationError
 from horde_workspace.workspace import Workspace
 
+try:
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+except AttributeError:
+    pass
+
 
 @dataclass
 class Generation:
