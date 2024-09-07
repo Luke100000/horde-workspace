@@ -1,5 +1,3 @@
-import random
-
 from PIL import Image
 from horde_sdk.ai_horde_api.consts import KNOWN_CONTROLNETS
 from pydantic import BaseModel, ConfigDict
@@ -20,7 +18,7 @@ class Job(BaseModel):
     size: Sizes | None = None
     n: int = 1
     model: str = "AlbedoBase XL (SDXL)"
-    seed: str = str(random.randint(0, 2**32))
+    seed: str | None = None
     tis: list[Embedding] = []
     loras: list[Lora] = []
     cfg_scale: float = 8.5

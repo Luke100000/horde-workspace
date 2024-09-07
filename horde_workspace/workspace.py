@@ -1,5 +1,4 @@
 import os
-import shelve
 import uuid
 from os import PathLike
 from pathlib import Path
@@ -19,8 +18,7 @@ class Workspace:
         self.workers = []
 
         self.directory.mkdir(parents=True, exist_ok=True)
-        self.shelve = shelve.open(str(self.directory / ".stats"))
-        self.shelve["kudos"] = self.shelve.get("kudos", 0)
+        self.kudos = 0
 
     def save(self, image: Image.Image, name: str | None = None) -> str:
         if name is None:
@@ -36,8 +34,7 @@ class Workspace:
         return Image.open(self.directory / name)
 
     def add_kudos(self, kudos: int) -> None:
-        self.shelve["kudos"] += kudos
-        self.shelve.sync()
+        self.kudos += kudos
 
     def get_kudos(self) -> int:
-        return self.shelve["kudos"]
+        return self.kudos
