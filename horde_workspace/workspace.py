@@ -16,8 +16,6 @@ class Workspace:
         self.shared = True
         self.apikey = os.getenv("HORDE_API_KEY")
         self.workers = []
-
-        self.directory.mkdir(parents=True, exist_ok=True)
         self.kudos = 0
 
     def save(self, image: Image.Image, name: str | None = None) -> str:
