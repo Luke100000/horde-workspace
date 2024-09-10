@@ -49,9 +49,13 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
     aiohttp_session = aiohttp.ClientSession()
     horde_client_session = AIHordeAPIAsyncClientSession(aiohttp_session)
 
-    model = MODELS[job.model]
-    loras = job.loras + [LORAS[lora] for lora in model.base_loras]
-    tis = job.tis + [EMBEDDINGS[ti] for ti in model.base_tis]
+    model = MODELS[job.model] if isinstance(job.model, str) else job.model
+    loras = job.loras + [
+        (LORAS[lora] if isinstance(lora, str) else lora) for lora in model.base_loras
+    ]
+    tis = job.tis + [
+        (EMBEDDINGS[ti] if isinstance(ti, str) else ti) for ti in model.base_tis
+    ]
 
     async with aiohttp_session, horde_client_session:
         client = AIHordeAPIAsyncSimpleClient(

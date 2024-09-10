@@ -1,5 +1,8 @@
 from pydantic import BaseModel
 
+from horde_workspace.classes.embedding import Embedding
+from horde_workspace.classes.lora import Lora
+
 
 class Model(BaseModel):
     name: str
@@ -13,5 +16,5 @@ class Model(BaseModel):
     )
     base_negative: str = "%watermark%"
 
-    base_loras: list[str] = []
-    base_tis: list[str] = []
+    base_loras: list[str | Lora] = []
+    base_tis: list[str | Embedding] = []

@@ -6,7 +6,7 @@ from PIL import Image
 
 
 class Workspace:
-    def __init__(self, directory: PathLike | str):
+    def __init__(self, directory: PathLike | str = "output") -> None:
         super().__init__()
 
         self.directory = Path(directory)

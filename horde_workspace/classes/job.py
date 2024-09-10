@@ -4,6 +4,7 @@ from pydantic import BaseModel, ConfigDict
 
 from horde_workspace.classes.embedding import Embedding
 from horde_workspace.classes.lora import Lora
+from horde_workspace.classes.model import Model
 from horde_workspace.classes.resolutions import Sizes
 
 
@@ -17,7 +18,7 @@ class Job(BaseModel):
     height: int = 1024
     size: Sizes | None = None
     n: int = 1
-    model: str = "AlbedoBase XL (SDXL)"
+    model: str | Model = "AlbedoBase XL (SDXL)"
     seed: str | None = None
     tis: list[Embedding] = []
     loras: list[Lora] = []
