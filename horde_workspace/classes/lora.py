@@ -10,6 +10,12 @@ class Lora(BaseModel):
     version_id: int = -1
     strength: float = 1.0
 
+    @staticmethod
+    def from_id(version_id: int) -> "Lora":
+        e = Lora(version_id=version_id)
+        e.resolve()
+        return e
+
     def resolve(self):
         if self.version_id == -1 and self.id == -1:
             raise ValueError("model_id or version_id must be set")

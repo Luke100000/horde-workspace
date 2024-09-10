@@ -12,6 +12,12 @@ class Embedding(BaseModel):
     strength: float = 1.0
     inject: Literal["prompt", "negprompt"] = "prompt"
 
+    @staticmethod
+    def from_id(model_id: int) -> "Embedding":
+        e = Embedding(id=model_id)
+        e.resolve()
+        return e
+
     def resolve(self) -> bool:
         if not self.name:
             data = get(f"https://civitai.com/api/v1/models/{self.id}")
