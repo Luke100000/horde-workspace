@@ -7,7 +7,7 @@ readme = "README.md"
 repository = "https://github.com/Luke100000/horde-workspace"
 
 [tool.poetry.dependencies]
-python = ">3.10"
+python = ">=3.10"
 horde-sdk = "^0.14.1"
 numpy = "^2.1.0"
 pillow = "^10.4.0"
