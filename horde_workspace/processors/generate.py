@@ -24,7 +24,7 @@ from horde_workspace.utils import download_image, b64_encode_image, GenerationEr
 from horde_workspace.workspace import Workspace
 
 try:
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())  # pyright: ignore [reportAttributeAccessIssue]
 except AttributeError:
     pass
 
@@ -38,6 +38,8 @@ class Generation:
         return [Image.open(io.BytesIO(i)) for i in self.images]
 
     def get_image(self) -> Image.Image:
+        if not self.images:
+            raise GenerationError("No images generated")
         return Image.open(io.BytesIO(self.images[0]))
 
 
@@ -131,7 +133,11 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
         tasks = [
             asyncio.create_task(download_image(aiohttp_session, generation.img))
             for generation in response.generations
+            if not generation.censored
         ]
+
+        if not tasks:
+            return Generation(images=[], kudos=0)
 
         images = await asyncio.gather(*tasks)
 

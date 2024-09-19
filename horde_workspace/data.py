@@ -14,13 +14,15 @@ SNIPPETS = {
     "watermark": "watermark, signature, logo, branding, copyright",
 }
 
-for yaml in Path("horde_workspace/data/models").glob("*.yaml"):
+root = Path(__file__).parent
+
+for yaml in Path(root / "data/models").glob("*.yaml"):
     with open(yaml, "r") as f:
         model = parse_yaml_raw_as(Model, f.read())
 
     MODELS[yaml.stem] = model
 
-for yaml in Path("horde_workspace/data/loras").glob("*.yaml"):
+for yaml in Path(root / "data/loras").glob("*.yaml"):
     with open(yaml, "r") as f:
         lora = parse_yaml_raw_as(Lora, f.read())
 
@@ -30,7 +32,7 @@ for yaml in Path("horde_workspace/data/loras").glob("*.yaml"):
 
     LORAS[yaml.stem] = lora
 
-for yaml in Path("horde_workspace/data/embeddings").glob("*.yaml"):
+for yaml in Path(root / "data/embeddings").glob("*.yaml"):
     with open(yaml, "r") as f:
         embedding = parse_yaml_raw_as(Embedding, f.read())
 

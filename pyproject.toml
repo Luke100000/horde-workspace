@@ -6,8 +6,11 @@ authors = ["Luke100000 <jonas.peche@aon.at>"]
 readme = "README.md"
 repository = "https://github.com/Luke100000/horde-workspace"
 
+[project.gui-scripts]
+horde-workspace = "horde_workspace.gui.main:main"
+
 [tool.poetry.dependencies]
-python = ">=3.10"
+python = ">=3.10,<3.13"
 horde-sdk = "^0.14.1"
 numpy = "*"
 pillow = "^10.4.0"
@@ -31,6 +34,10 @@ torch = "^2.4.1"
 einops = "^0.8.0"
 timm = "^1.0.9"
 flash-attn = "1.0.5"
+
+
+[tool.poetry.group.gui.dependencies]
+pyside6 = "^6.7.2"
 
 [build-system]
 requires = ["poetry-core"]

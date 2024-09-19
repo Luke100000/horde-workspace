@@ -26,7 +26,7 @@ from horde_workspace.utils import (
 from horde_workspace.workspace import Workspace
 
 try:
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())  # pyright: ignore [reportAttributeAccessIssue]
 except AttributeError:
     pass
 
