@@ -31,8 +31,9 @@ except AttributeError:
 
 @dataclass
 class Generation:
-    images: list[bytes]
-    kudos: int
+    uuids: list[str] = []
+    images: list[bytes] = []
+    kudos: int = 0
 
     def get_images(self) -> list[Image.Image]:
         return [Image.open(io.BytesIO(i)) for i in self.images]
@@ -137,7 +138,7 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
         ]
 
         if not tasks:
-            return Generation(images=[], kudos=0)
+            return Generation()
 
         images = await asyncio.gather(*tasks)
 
@@ -145,7 +146,8 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
 
         # noinspection PyTypeChecker
         return Generation(
+            uuids=[str(generation.id_) for generation in response.generations],
             images=[i for i in images if i is not None],
             kudos=int(response.kudos),
         )  # pyright: ignore [reportArgumentType]
-    return Generation(images=[], kudos=0)
+    return Generation()
