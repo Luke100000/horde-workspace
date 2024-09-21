@@ -13,6 +13,8 @@ class Workspace:
 
         self.trusted_workers = False
         self.slow_workers = True
+        self.nsfw = True
+        self.censor_nsfw = False
         self.shared = True
         self.apikey = os.getenv("HORDE_API_KEY")
         self.workers = []

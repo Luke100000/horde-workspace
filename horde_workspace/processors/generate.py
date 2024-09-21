@@ -99,6 +99,8 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
             ImageGenerateAsyncRequest(
                 trusted_workers=ws.trusted_workers,
                 slow_workers=ws.slow_workers,
+                nsfw=ws.nsfw,
+                censor_nsfw=ws.censor_nsfw,
                 shared=ws.shared,
                 apikey=ws.apikey,
                 workers=ws.workers,
