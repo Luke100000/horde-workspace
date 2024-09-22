@@ -2,7 +2,11 @@ import os
 import uuid
 from os import PathLike
 from pathlib import Path
+
 from PIL import Image
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class Workspace:

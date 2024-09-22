@@ -1,4 +1,4 @@
-name: "Dreamshaper XL"
+name: "DreamShaper XL"
 base_model: "stable_diffusion_xl"
 resolution: 1024
 default_steps: 4

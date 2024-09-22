@@ -118,26 +118,33 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
 
 
 async def request(func, url: str, headers: dict, payload: dict | None = None) -> dict:
-    try:
-        async with func(url, json=payload, headers=headers) as response:
-            if response.status not in [200, 202]:
-                raise APIError(
-                    f"Error during request {url}: {response.status}, {await response.text()}"
+    while True:
+        try:
+            async with func(url, json=payload, headers=headers) as response:
+                if response.status == 429:
+                    logging.info("Rate limited, waiting 1s")
+                    await asyncio.sleep(1)
+                    continue
+                if response.status not in [200, 202]:
+                    raise APIError(
+                        f"Error during request {url}: {response.status}, {await response.text()}"
+                    )
+
+                response_data = await response.json()
+                logging.debug(
+                    "Response from %s %s: %s", func.__name__, url, response_data
                 )
 
-            response_data = await response.json()
-            logging.debug(response_data)
-
-            return response_data
-    except (aiohttp.ClientError, Exception) as e:
-        raise APIError(e)
+                return response_data
+        except (aiohttp.ClientError, Exception) as e:
+            raise APIError(e)
 
 
 async def async_generate_images_inner(
-    payload: dict, api_key: str, timeout: int = 1000
+    payload: dict, apikey: str, timeout: int = 1000
 ) -> Generation:
     headers = {
-        "apikey": api_key,
+        "apikey": apikey,
         "Client-Agent": "horde-workspace:0:https://github.com/Luke100000/horde-workspace",
         "Content-Type": "application/json",
     }
@@ -154,6 +161,10 @@ async def async_generate_images_inner(
         if not request_id:
             raise APIError("No request ID found in the response")
 
+        if "warnings" in response_data:
+            for warning in response_data["warnings"]:
+                logging.warning(warning)
+
         # Poll
         done = False
         not_possible = False
@@ -166,6 +177,7 @@ async def async_generate_images_inner(
                 done = True
                 break
             elif not check_data.get("is_possible"):
+                logging.debug("Not possible: %s", payload)
                 not_possible = True
                 break
             elif check_data.get("faulted"):
