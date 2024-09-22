@@ -11,10 +11,13 @@ class Model(BaseModel):
     clip_skip: int = 2
     resolution: int = 1024
 
-    base_positive: str = (
-        "score_9, score_8_up, score_7_up, score_6_up, score_5_up, masterpiece"
-    )
-    base_negative: str = "%watermark%"
+    default_steps: int = 30
+    default_cfg_scale: float = 7.5
+
+    sampler: str = "k_dpmpp_2m"
+
+    base_positive: str = ""
+    base_negative: str = ""
 
     base_loras: list[str | Lora] = []
     base_tis: list[str | Embedding] = []

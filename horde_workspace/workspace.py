@@ -16,7 +16,7 @@ class Workspace:
         self.nsfw = True
         self.censor_nsfw = False
         self.shared = True
-        self.apikey = os.getenv("HORDE_API_KEY")
+        self.apikey = os.getenv("HORDE_API_KEY") or "0000000000"
         self.workers = []
         self.kudos = 0
 
@@ -29,6 +29,9 @@ class Workspace:
         image.save(path)
 
         return name
+
+    def exists(self, name: str) -> bool:
+        return (self.directory / name).exists()
 
     def load(self, name: str) -> Image.Image:
         return Image.open(self.directory / name)

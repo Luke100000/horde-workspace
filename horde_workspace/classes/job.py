@@ -1,5 +1,4 @@
 from PIL import Image
-from horde_sdk.ai_horde_api.consts import KNOWN_CONTROLNETS
 from pydantic import BaseModel, ConfigDict
 
 from horde_workspace.classes.embedding import Embedding
@@ -13,7 +12,7 @@ class Job(BaseModel):
 
     prompt: str
     negprompt: str = ""
-    steps: int = 25
+    steps: int | None = None
     width: int = 1024
     height: int = 1024
     size: Sizes | None = None
@@ -22,9 +21,9 @@ class Job(BaseModel):
     seed: str | None = None
     tis: list[Embedding] = []
     loras: list[Lora] = []
-    cfg_scale: float = 8.5
+    cfg_scale: float | None = None
     denoising_strength: float = 1.0
     transparent: bool = False
     hires: bool = False
-    control_type: KNOWN_CONTROLNETS | None = None
+    control_type: str | None = None
     source_image: Image.Image | None = None

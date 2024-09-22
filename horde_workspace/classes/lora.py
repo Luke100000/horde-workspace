@@ -1,4 +1,3 @@
-from horde_sdk.ai_horde_api.apimodels import LorasPayloadEntry
 from pydantic import BaseModel
 
 from horde_workspace.utils import get
@@ -34,8 +33,8 @@ class Lora(BaseModel):
     def __str__(self) -> str:
         return f"{self.name} ({self.id}@{self.version_id})"
 
-    def to_payload(self) -> LorasPayloadEntry:
-        return LorasPayloadEntry(
+    def to_payload(self) -> dict:
+        return dict(
             name=str(self.version_id),
             model=self.strength,
             is_version=True,

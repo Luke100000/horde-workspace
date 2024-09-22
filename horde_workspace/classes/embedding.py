@@ -1,6 +1,5 @@
 from typing import Literal
 
-from horde_sdk.ai_horde_api.apimodels import TIPayloadEntry
 from pydantic import BaseModel
 
 from horde_workspace.utils import get
@@ -28,8 +27,8 @@ class Embedding(BaseModel):
     def __str__(self) -> str:
         return f"{self.name} ({self.id})"
 
-    def to_payload(self) -> TIPayloadEntry:
-        return TIPayloadEntry(
+    def to_payload(self) -> dict:
+        return dict(
             name=str(self.id),
             strength=self.strength,
             inject_ti=self.inject,

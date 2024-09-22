@@ -1,0 +1,3 @@
+name: "stable_diffusion"
+base_model: "stable diffusion 1"
+resolution: 512

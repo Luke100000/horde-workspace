@@ -11,7 +11,10 @@ LORAS: dict[str, Lora] = {}
 EMBEDDINGS: dict[str, Embedding] = {}
 
 SNIPPETS = {
-    "watermark": "watermark, signature, logo, branding, copyright",
+    "watermark": "watermark, signature, logo, branding, copyright, censored, text",
+    "good": "score_9, score_8_up, score_7_up, score_6_up, score_5_up, masterpiece",
+    "bad": "score_6, score_5, score_4, blurry, lowres, worst quality, low quality, pixelated, bad art, bad quality",
+    "deformed": "deformed, bad anatomy, bad hands, bad hand",
 }
 
 root = Path(__file__).parent

@@ -16,9 +16,7 @@ def get(url) -> dict:
         raise ValueError(f"Failed to resolve model: {response.text}")
 
 
-async def download_image(
-    aiohttp_session: aiohttp.ClientSession, url: str
-) -> bytes | None:
+async def download_image(aiohttp_session: aiohttp.ClientSession, url: str) -> bytes:
     """Asynchronously convert from base64 or download an image from a response."""
     if urllib.parse.urlparse(url).scheme in {"http", "https"}:
         async with aiohttp_session.get(url) as response:

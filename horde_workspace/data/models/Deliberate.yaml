@@ -1,0 +1,3 @@
+name: "Deliberate"
+base_model: "stable diffusion 1"
+resolution: 512
