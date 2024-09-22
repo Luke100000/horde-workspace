@@ -63,6 +63,9 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
         params_kwargs["control_type"] = job.control_type
         params_kwargs["image_is_control"] = True
 
+    if job.seed is not None:
+        params_kwargs["seed"] = job.seed
+
     # Set size
     if job.size is None:
         width = job.width
@@ -92,7 +95,6 @@ async def async_generate_images(ws: Workspace, job: Job) -> Generation:
         **kwargs,
         params=dict(
             steps=model.default_steps if job.steps is None else job.steps,
-            seed=job.seed,
             cfg_scale=model.default_cfg_scale
             if job.cfg_scale is None
             else job.cfg_scale,
