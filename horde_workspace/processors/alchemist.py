@@ -101,7 +101,6 @@ async def async_alchemist(
         url_status = f"https://stablehorde.net/api/v2/interrogate/status/{request_id}"
         for _ in range(timeout):
             status_data = await request(session.get, url_status, headers)
-            print(status_data)
 
             # Check if the request is completed
             if status_data["state"] == "done":
