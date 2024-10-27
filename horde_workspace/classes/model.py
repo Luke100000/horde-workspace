@@ -8,7 +8,7 @@ class Model(BaseModel):
     name: str
     base_model: str
 
-    clip_skip: int = 2
+    clip_skip: int = 1
     resolution: int = 1024
 
     default_steps: int = 30

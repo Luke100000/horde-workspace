@@ -3,4 +3,4 @@ base_model: "flux_1"
 resolution: 1024
 default_steps: 4
 default_cfg_scale: 1.0
-sampler: "k_euler_a"
+sampler: "k_euler"
